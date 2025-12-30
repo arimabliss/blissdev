@@ -21,11 +21,31 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
+    <!-- Icons: Phosphor Icons -->
+    <script>
+        var head = document.getElementsByTagName("head")[0];
+        for (const weight of ["regular", "thin", "light", "bold", "fill", "duotone"]) {
+            var link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.type = "text/css";
+            link.href = `https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/${weight}/style.css`;
+            head.appendChild(link);
+        }
+    </script>
     <!-- Icons: Font Awesome (Beautiful & Cute) -->
     <link rel="stylesheet" href="assets/fonts/all.min.css">
-    <!-- Icons: Phosphor Icons (For Features Section) -->
-    <script src="assets/icons/phosphor.js"></script>
     <!-- Bot Configuration -->
+    <script>
+      // Load config or initialize if missing
+      if (typeof CONFIG === 'undefined') {
+        window.CONFIG = {
+            botInviteUrl: "https://discord.com/oauth2/authorize?client_id=1443567723404853408&permissions=8&integration_type=0&scope=bot+applications.commands",
+            supportServerUrl: "https://discord.com/invite/twNGK45BuH",
+            botName: "Kali Billi",
+            botDescription: "Your Cute Discord Companion - Fun, moderation, and AI chat for your Discord server."
+        };
+      }
+    </script>
     <script src="config/config.js"></script>
     <style>
         :root {
@@ -100,7 +120,7 @@
             transform: translate(-50%, -50%);
             transition: width 0.3s, height 0.3s, background 0.3s;
             mix-blend-mode: multiply;
-            display: none;
+            display: block; /* Changed from none to block */
             /* Hidden on touch devices via JS */
         }
         /* Heart shape for cursor hover */
@@ -1676,11 +1696,7 @@
     <!-- ✨ JAVASCRIPT LOGIC ✨ -->
     <script>
         // --- ⚙️ CONFIGURATION ⚙️ ---
-        const CONFIG = {
-            inviteLink: "https://discord.com/oauth2/authorize?client_id=1443567723404853408&permissions=8&integration_type=0&scope=bot+applications.commands",
-            supportLink: "https://discord.com/invite/twNGK45BuH",
-            githubLink: "https://github.com/devrock07"
-        };
+        // CONFIG is already handled in the head
         // --- COMMAND LIST DATA ---
         const commands = {
             fun: ['/amongus', '/animal', '/animu', '/canvas-filter', '/canvas-misc', '/chat', '/dare', '/hack', '/howdumb', '/howgay', '/kill', '/lick', '/meme', '/pickup'],
@@ -1700,10 +1716,14 @@
                 }
             }, 2500); // Show loading screen for 2.5 seconds
             // Set Links
-            document.querySelectorAll('#nav-invite-btn, #hero-invite-btn, #foot-invite').forEach(el => el.href = CONFIG.inviteLink);
-            document.querySelectorAll('#hero-support-btn, #foot-support').forEach(el => el.href = CONFIG.supportLink);
-            document.querySelectorAll('#foot-github').forEach(el => el.href = CONFIG.githubLink);
-            document.getElementById('nav-demo-btn').href = CONFIG.supportLink;
+            const inviteUrl = CONFIG.botInviteUrl || CONFIG.inviteLink;
+            const supportUrl = CONFIG.supportServerUrl || CONFIG.supportLink;
+            const githubUrl = CONFIG.githubLink || 'https://github.com/devrock07';
+
+            document.querySelectorAll('#nav-invite-btn, #hero-invite-btn, #foot-invite').forEach(el => el.href = inviteUrl);
+            document.querySelectorAll('#hero-support-btn, #foot-support').forEach(el => el.href = supportUrl);
+            document.querySelectorAll('#foot-github').forEach(el => el.href = githubUrl);
+            document.getElementById('nav-demo-btn').href = supportUrl;
             document.getElementById('nav-demo-btn').target = '_blank';
             // Render Commands
             for (const [category, cmds] of Object.entries(commands)) {
@@ -2010,90 +2030,95 @@
         function onCaptchaSuccess() {
             captchaPassed = true;
             const sendBtn = document.getElementById("sendBtn");
-            sendBtn.disabled = false;
+            if (sendBtn) sendBtn.disabled = false;
         }
         function onCaptchaExpired() {
             captchaPassed = false;
             const sendBtn = document.getElementById("sendBtn");
-            sendBtn.disabled = true;
+            if (sendBtn) sendBtn.disabled = true;
         }
         const form = document.getElementById("feedbackForm");
         const sendBtn = document.getElementById("sendBtn");
         const statusMsg = document.getElementById("statusMsg");
-        form.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const username = document.getElementById("discordUsername").value.trim();
-            const serverLink = document.getElementById("serverLink").value.trim();
-            const feedback = document.getElementById("feedbackText").value.trim();
-            const token = grecaptcha.getResponse();
-            // Validation
-            if (!username || !feedback) {
-                statusMsg.textContent = "Uhm You must enter a username and feedback.";
-                statusMsg.className = "error";
-                return;
-            }
-            if (!captchaPassed || !token) {
-                statusMsg.textContent = "Ahh Please complete the captcha first.";
-                statusMsg.className = "error";
-                return;
-            }
-            sendBtn.disabled = true;
-            sendBtn.textContent = "✨ Sending...";
-            statusMsg.textContent = "";
-            try {
-                const res = await fetch("/api/feedback", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ username, serverLink, feedback, token }),
-                });
-                const data = await res.json().catch(() => ({}));
-                if (!res.ok) {
-                    throw new Error(data.message || `HTTP ${res.status}`);
+        if (form) {
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const username = document.getElementById("discordUsername").value.trim();
+                const serverLink = document.getElementById("serverLink").value.trim();
+                const feedback = document.getElementById("feedbackText").value.trim();
+                const token = grecaptcha.getResponse();
+                // Validation
+                if (!username || !feedback) {
+                    statusMsg.textContent = "Uhm You must enter a username and feedback.";
+                    statusMsg.className = "error";
+                    return;
                 }
-                statusMsg.textContent = "Hehe yes Feedback sent successfully! Thank you so much! 💕";
-                statusMsg.className = "success";
-                form.reset();
-                captchaPassed = false;
-                grecaptcha.reset();
+                if (!captchaPassed || !token) {
+                    statusMsg.textContent = "Ahh Please complete the captcha first.";
+                    statusMsg.className = "error";
+                    return;
+                }
                 sendBtn.disabled = true;
-                sendBtn.textContent = "Send Feedback";
-            } catch (err) {
-                console.error("Frontend error:", err);
-                statusMsg.textContent = "Uhm Failed to send feedback: " + err.message;
-                statusMsg.className = "error";
-                sendBtn.disabled = true;
-                grecaptcha.reset();
-                captchaPassed = false;
-                sendBtn.textContent = "Send Feedback";
-            }
-        });
+                sendBtn.textContent = "✨ Sending...";
+                statusMsg.textContent = "";
+                try {
+                    const res = await fetch("/api/feedback", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ username, serverLink, feedback, token }),
+                    });
+                    const data = await res.json().catch(() => ({}));
+                    if (!res.ok) {
+                        throw new Error(data.message || `HTTP ${res.status}`);
+                    }
+                    statusMsg.textContent = "Hehe yes Feedback sent successfully! Thank you so much! 💕";
+                    statusMsg.className = "success";
+                    form.reset();
+                    captchaPassed = false;
+                    grecaptcha.reset();
+                    sendBtn.disabled = true;
+                    sendBtn.textContent = "Send Feedback";
+                } catch (err) {
+                    console.error("Frontend error:", err);
+                    statusMsg.textContent = "Uhm Failed to send feedback: " + err.message;
+                    statusMsg.className = "error";
+                    sendBtn.disabled = true;
+                    grecaptcha.reset();
+                    captchaPassed = false;
+                    sendBtn.textContent = "Send Feedback";
+                }
+            });
+        }
     </script>
     <!-- Config-based button handlers -->
     <script>
         // Set up button redirects using config values
         window.addEventListener('load', () => {
             if (typeof CONFIG !== 'undefined') {
+                const inviteUrl = CONFIG.botInviteUrl || CONFIG.inviteLink;
+                const supportUrl = CONFIG.supportServerUrl || CONFIG.supportLink;
+
                 // Navigation buttons
                 const navInviteBtn = document.getElementById('nav-invite-btn');
-                if (navInviteBtn) navInviteBtn.onclick = () => window.open(CONFIG.botInviteUrl, '_blank');
+                if (navInviteBtn) navInviteBtn.onclick = () => window.open(inviteUrl, '_blank');
                 
                 // Hero section buttons
                 const heroInviteBtn = document.getElementById('hero-invite-btn');
                 if (heroInviteBtn) {
-                    heroInviteBtn.href = CONFIG.botInviteUrl;
+                    heroInviteBtn.href = inviteUrl;
                     heroInviteBtn.onclick = (e) => {
                         e.preventDefault();
                         confettiEffect(e);
-                        window.open(CONFIG.botInviteUrl, '_blank');
+                        window.open(inviteUrl, '_blank');
                     };
                 }
                 
                 const heroSupportBtn = document.getElementById('hero-support-btn');
                 if (heroSupportBtn) {
-                    heroSupportBtn.href = CONFIG.supportServerUrl;
+                    heroSupportBtn.href = supportUrl;
                     heroSupportBtn.onclick = (e) => {
                         e.preventDefault();
-                        window.open(CONFIG.supportServerUrl, '_blank');
+                        window.open(supportUrl, '_blank');
                     };
                 }
                 
@@ -2101,13 +2126,13 @@
                 const footInvite = document.getElementById('foot-invite');
                 if (footInvite) footInvite.onclick = (e) => {
                     e.preventDefault();
-                    window.open(CONFIG.botInviteUrl, '_blank');
+                    window.open(inviteUrl, '_blank');
                 };
                 
                 const footSupport = document.getElementById('foot-support');
                 if (footSupport) footSupport.onclick = (e) => {
                     e.preventDefault();
-                    window.open(CONFIG.supportServerUrl, '_blank');
+                    window.open(supportUrl, '_blank');
                 };
                 
                 const footGithub = document.getElementById('foot-github');
