@@ -1675,14 +1675,14 @@
             <div class="footer-content">
                 <div class="footer-logo">Kali Billi <i class="fas fa-cat" style="color:#ffb3d1"></i></div>
                 <p style="margin-bottom: 20px; color: var(--text-light);">Made with <span
-                        style="color: #ff4757;">💢</span> and lots of treats.</p>
+                        style="color: #ff4757;">❤️</span> and lots of treats.</p>
                 <div class="social-links">
                     <a href="#" id="foot-invite" aria-label="Discord Invite"><i class="fas fa-star"></i></a>
                     <a href="#" id="foot-support" aria-label="Support Server"><i class="fab fa-discord"></i></a>
                     <a href="#" id="foot-github" aria-label="GitHub"><i class="fab fa-github"></i></a>
                 </div>
                 <div class="copyright">
-                    &copy; 2025 Kali Billi Bot. All rights reserved.
+                    &copy; 2025 bliss Bot. All rights reserved.
                 </div>
             </div>
     </footer>
@@ -1699,59 +1699,26 @@
         // CONFIG is already handled in the head
         // --- COMMAND LIST DATA ---
         const commands = {
-antinuke: [
-  '.antinuke enable', '.antinuke disable', '.antinuke show',
-  '.antinuke events', '.antinuke recover',
-  '.antinuke whitelist add', '.antinuke whitelist remove',
-  '.antinuke whitelist reset', '.antinuke whitelist show',
-  '.antinuke punishment set', '.antinuke punishment show',
-  '.extraowner', '.extraowner add', '.extraowner remove', '.extraowner show'
-],
-
-utility: [
-  '.afk', '.avatar', '.firstmessage', '.servericon',
-  '.membercount', '.snipe', '.invite', '.serverinfo',
-  '.userinfo', '.roleinfo', '.botinfo', '.boosts',
-  '.ping', '.list boosters', '.list inrole', '.list emojis',
-  '.list bots', '.list admins', '.list invoice',
-  '.list mods', '.list roles',
-  '.banner user', '.banner server',
-
-  // PFPS
-  '.pfps', '.pfps male', '.pfps matching', '.pfps anime', '.pfps female'
-],
-
 fun: [
-  '.jailed', '.wanted', '.wasted',
-  '.chess', '.connect4', '.ttt',
-  '.rps', '.wordle', '.2048',
-  '.ship', '.tickle', '.kiss', '.slap',
-  '.feed', '.pet',
-  '.howcute', '.howgay',
-  '.slots', '.penis', '.sigma',
-  '.pickupline', '.iplookup'
+  '.jailed', '.wanted', '.wasted', '.chess', '.connect4', '.ttt',
+  '.rps', '.wordle', '.2048', '.ship', '.tickle', '.kiss', '.slap',
+  '.feed', '.pet', '.howcute', '.howgay', '.slots', '.penis',
+  '.sigma', '.pickupline', '.iplookup'
 ],
 
-moderation: [
-  '.mute', '.unmute', '.unmuteall',
-  '.kick', '.warn', '.ban', '.unban',
-  '.nick', '.setprefix',
+giveaway: [
+  '.gstart', '.gend', '.greroll'
+],
 
+mod: [
+  '.mute', '.unmute', '.unmuteall', '.kick', '.warn', '.ban', '.unban',
+  '.nick', '.setprefix', '.nuke', '.lock', '.unlock',
+  '.hide', '.unhide', '.hideall', '.unhideall', '.unbanall',
+  '.role', '.role humans', '.role bots', '.rolecolor', '.roleicon',
+  '.steal', '.addsticker',
   '.clear', '.clear all', '.clear bots', '.clear embeds',
   '.clear files', '.clear mentions', '.clear images',
-  '.clear contains', '.clear reactions',
-  '.clear user', '.clear emoji',
-
-  '.role', '.role humans', '.role bots',
-  '.rolecolor', '.roleicon',
-
-  '.nuke',
-  '.lock', '.unlock',
-  '.hide', '.unhide',
-  '.hideall', '.unhideall',
-  '.unbanall',
-
-  '.steal', '.addsticker'
+  '.clear contains', '.clear reactions', '.clear user', '.clear emoji'
 ],
 
 ignore: [
@@ -1762,15 +1729,10 @@ ignore: [
 ],
 
 extra: [
-  '.autoreact',
-  '.setchatbot', '.resetchatbot',
-
+  '.autoreact', '.setchatbot', '.resetchatbot',
   '.vcban', '.vcban add', '.vcban remove', '.vcban clear', '.vcban config',
-
   '.chatban', '.chatban add', '.chatban remove', '.chatban config',
-
   '.reactban', '.reactban add', '.reactban remove', '.reactban config',
-
   '.top guild', '.top users', '.profile'
 ],
 
@@ -1787,17 +1749,14 @@ ticket: [
 welcome: [
   '.autorole',
   '.greet setup', '.greet reset', '.greet channel',
-  '.greet edit', '.greet test', '.greet config',
-  '.greet autodelete'
+  '.greet edit', '.greet test', '.greet config', '.greet autodelete'
 ],
 
 customroles: [
-  '.setup',
-  '.setup create', '.setup delete', '.setup list',
+  '.setup', '.setup create', '.setup delete', '.setup list',
   '.setup staff', '.setup girl', '.setup friend',
   '.setup vip', '.setup guest',
   '.setup reqrole', '.setup config', '.setup reset',
-
   '.staff', '.girl', '.friend', '.vip', '.guest'
 ],
 
@@ -1807,27 +1766,14 @@ confessions: [
   '.confessions mute', '.confessions unmute'
 ],
 
-giveaway: [
-  '.gstart', '.gend', '.greroll'
-],
-
 music: [
-  '.play', '.pause', '.resume', '.stop',
-  '.queue', '.volume', '.skip',
-  '.join', '.leave', '.loop',
-  '.nowplaying', '.seek',
-  '.enhance', '.forcefix',
-  '.toggle', '.toggle source', '.toggle volume',
-
-  // filters
-  '.filter',
-  '.filter tremolo', '.filter rotation',
-  '.filter nightcore', '.filter channelmix',
-  '.filter lofi', '.filter slowmo',
-  '.filter 8d', '.filter vibrato',
-  '.filter bassboost', '.filter lowpass',
-  '.filter distortion', '.filter timescale',
-  '.filter karaoke'
+  '.play', '.pause', '.resume', '.stop', '.queue', '.volume',
+  '.skip', '.join', '.leave', '.loop', '.nowplaying', '.seek',
+  '.enhance', '.forcefix', '.toggle', '.toggle source', '.toggle volume',
+  '.filter', '.filter tremolo', '.filter rotation', '.filter nightcore',
+  '.filter channelmix', '.filter lofi', '.filter slowmo', '.filter 8d',
+  '.filter vibrato', '.filter bassboost', '.filter lowpass',
+  '.filter distortion', '.filter timescale', '.filter karaoke'
 ],
 
 voice: [
@@ -1837,9 +1783,27 @@ voice: [
   '.voice unmute', '.voice unmuteall',
   '.voice deafen', '.voice deafenall',
   '.voice undeafen', '.voice undeafenall',
-  '.voice moveall',
-  '.vc pull',
+  '.voice moveall', '.vc pull',
   '.vcrole add', '.vcrole remove', '.vcrole config'
+],
+
+utility: [
+  '.afk', '.avatar', '.firstmessage', '.servericon',
+  '.membercount', '.snipe', '.invite', '.serverinfo',
+  '.userinfo', '.roleinfo', '.botinfo', '.boosts', '.ping',
+  '.list boosters', '.list inrole', '.list emojis', '.list bots',
+  '.list admins', '.list invoice', '.list mods', '.list roles',
+  '.banner user', '.banner server',
+  '.pfps', '.pfps male', '.pfps matching', '.pfps anime', '.pfps female'
+],
+
+antinuke: [
+  '.antinuke enable', '.antinuke disable', '.antinuke show',
+  '.antinuke events', '.antinuke recover',
+  '.antinuke whitelist add', '.antinuke whitelist remove',
+  '.antinuke whitelist reset', '.antinuke whitelist show',
+  '.antinuke punishment set', '.antinuke punishment show',
+  '.extraowner', '.extraowner add', '.extraowner remove', '.extraowner show'
 ]
         };
         // --- INIT ---
